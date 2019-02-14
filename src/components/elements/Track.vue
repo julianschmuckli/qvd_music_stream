@@ -1,11 +1,12 @@
 <template>
-  <v-item style="margin-left:auto;margin-right:auto;">
+  <v-item class="track_outer">
       <v-card
         slot-scope="{ active, toggle }"
-        :style="active ? 'opacity:0.5;' : ''"
+        :style="active ? 'opacity:0.5' : ''"
         class="d-flex align-center"
         dark
-        elevation="15"
+        hover
+        elevation="12"
         height="200"
         width="200"
         @click="toggle"
@@ -17,6 +18,7 @@
             class="text-xs-center"
           >
             <p>{{ title }}</p>
+            <i class="material-icons">play_arrow</i> <i class="material-icons">cloud_download</i>
           </div>
         </v-scroll-y-transition>
       </v-card>
@@ -33,8 +35,9 @@ export default {
 </script>
 
 <style>
-.center_box{
+.track_outer{
   margin-left:auto;
   margin-right:auto;
+  margin-top:30px;
 }
 </style>

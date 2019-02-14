@@ -2,12 +2,17 @@
   <div id="new_releases" class="default">
     <v-item-group>
       <v-container grid-list-md>
+        <div style="text-align:center;">
+          <h2>New releases</h2>
+        </div>
         <v-layout wrap>
           <v-flex
-            v-for="n in 3"
+            v-for="n in 5"
             :key="n"
             xs12
+            sm6
             md4
+            lg3
           >
             <Track title="Take Your Pain Away (Extended Mix)" />
           </v-flex>
@@ -29,5 +34,5 @@ export default {
 </script>
 
 <style>
-@import '../../assets/css/page.css';
+
 </style>

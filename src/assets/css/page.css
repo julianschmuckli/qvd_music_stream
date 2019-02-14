@@ -1,4 +1,8 @@
-.default{
-  background: #424242;
-  height: 100vh;
+main{
+  background: #303030;
+}
+
+h2{
+  font-size:30px;
+  color:white;
 }

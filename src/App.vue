@@ -21,6 +21,8 @@ export default {
 </script>
 
 <style>
+@import './assets/css/page.css';
+
 *:not(.material-icons){
   font-family: "Staatliches", sans-serif !important;
 }
