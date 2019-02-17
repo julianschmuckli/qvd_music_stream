@@ -1,26 +1,20 @@
 <template>
   <v-item class="track_outer">
       <v-card
-        slot-scope="{ active, toggle }"
-        :style="active ? 'opacity:0.5' : ''"
-        class="d-flex align-center"
+        :style="card_style"
+        class="d-flex"
         dark
         hover
         elevation="12"
-        height="200"
+        :height="card_height"
         width="200"
-        @click="toggle"
-        style="background-image:url('https://i1.sndcdn.com/artworks-000485899176-e28rdl-t500x500.jpg');background-size:cover;"
+        @mouseenter="mouseOver"
+        @mouseleave="mouseOver"
       >
-        <v-scroll-y-transition>
-          <div
-            v-if="active"
-            class="text-xs-center"
-          >
-            <p>{{ title }}</p>
-            <i class="material-icons">play_arrow</i> <i class="material-icons">cloud_download</i>
-          </div>
-        </v-scroll-y-transition>
+      <div style="position:relative;top:200px;left:0;text-align:center;" v-if="active" class="animated fadeIn">
+        <span>{{ title }}</span><br>
+        <i class="material-icons">play_arrow</i> <i class="material-icons">cloud_download</i>
+      </div>
       </v-card>
   </v-item>
 </template>
@@ -29,7 +23,32 @@
 export default {
   name: 'Track',
   props:{
-    title: String
+    title: String,
+    cover: {
+      type: String,
+      default: "https://cdn.pixabay.com/photo/2015/07/19/11/05/panels-851426_960_720.jpg"
+    }
+  },
+  data: function(){
+    return {
+      active: false,
+      card_height: 200
+    }
+  },
+  computed: {
+    card_style: function(){
+      return "background-image:url('" + this.cover + "');background-size:200px 200px;transition: height 0.3s;";
+    }
+  },
+  methods: {
+    mouseOver: function(){
+      this.active = !this.active;
+      if(this.active){
+        this.card_height = 250;
+      }else{
+        this.card_height = 200;
+      }
+    }
   }
 }
 </script>

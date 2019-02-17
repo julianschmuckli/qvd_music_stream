@@ -7,14 +7,14 @@
         </div>
         <v-layout wrap>
           <v-flex
-            v-for="n in 5"
-            :key="n"
+            v-for="track in new_tracks"
+            :key="track.id"
             xs12
             sm6
             md4
             lg3
           >
-            <Track title="Take Your Pain Away (Extended Mix)" />
+            <Track :title="track.track_name" :cover="track.cover_path" class="animated flipInY" />
           </v-flex>
         </v-layout>
       </v-container>
@@ -29,6 +29,17 @@ export default {
   name: 'New',
   components: {
     Track
+  },
+  data: function(){
+    return {
+      new_tracks: []
+    }
+  },
+  mounted: function(){
+    let api_new_tracks = "https://qvd-music.com/backend/stream/tracks/new.php";
+    this.axios.get(api_new_tracks).then((response) => {
+      this.new_tracks = response.data.tracks;
+    });
   }
 }
 </script>

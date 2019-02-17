@@ -22,6 +22,7 @@ export default {
 
 <style>
 @import './assets/css/page.css';
+@import './assets/css/animate.css';
 
 *:not(.material-icons){
   font-family: "Staatliches", sans-serif !important;
