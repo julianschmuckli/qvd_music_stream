@@ -1,6 +1,6 @@
 <template>
   <div id="playbar_container">
-    <vue-headful :title="title + ' - ' + artist"/> <!-- For title -->
+    <vue-headful :title="titlebar"/> <!-- For title -->
     <v-snackbar
       v-model="snackbar"
       :timeout="3000"
@@ -88,6 +88,13 @@ export default {
       }catch(e){
         return 0;
       }
+    },
+    titlebar: function(){
+      if(this.title === ""){
+        return "Stream";
+      } else {
+        return this.title + ' - ' + this.artist;
+      }
     }
   },
   watch: {
@@ -126,7 +133,9 @@ export default {
           try{
             this.audio.currentTime = 0;
             this.audio.pause();
-          }catch(e){ console.log(e)}
+          }catch(e){
+            //Maybe first start
+          }
           this.audio = new Audio(Store_Play.current_stream_url);
         }
         this.audio.volume = this.volume/100;
