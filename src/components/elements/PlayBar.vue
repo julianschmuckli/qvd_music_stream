@@ -2,7 +2,8 @@
   <div id="playbar_container">
     <v-card width="100%"  id="playbar" height="100" class="animated slideInUp">
       <v-progress-linear :indeterminate="true" background-color="black lighten-3" color="white lighten-1" v-if="isLoading"></v-progress-linear>
-      <p style="margin-top:20px;">{{ title }}</p>
+      <v-progress-linear :indeterminate="false" background-color="black lighten-3" color="white lighten-1" v-if="!isLoading" :value="audioLength"></v-progress-linear>
+      <p style="padding-top:20px;">{{ title }}</p>
       <p>
         <i class="material-icons controls" @click="resumePlay" v-if="!isPlaying">play_arrow</i>
         <i class="material-icons controls" @click="pauseTrack" v-if="isPlaying">pause</i>
@@ -19,6 +20,8 @@ export default {
   data: function(){
     return {
       audio: undefined,
+      audio_currentTime: 0,
+      audio_duration: 0,
       recent_stream_url: undefined
     }
   },
@@ -37,6 +40,14 @@ export default {
     },
     isLoading: function(){
       return this.isPlaying && this.audio == undefined;
+    },
+    audioLength: function(){
+      try{
+        console.log((this.audio_currentTime));
+        return (this.audio_currentTime / this.audio_duration) * 100;
+      }catch(e){
+        return 0;
+      }
     }
   },
   methods: {
@@ -45,6 +56,12 @@ export default {
         this.audio = new Audio(Store_Play.current_stream_url);
       }
       this.audio.play();
+
+      var global_audio = this.audio;
+      this.audio.ontimeupdate = function(){
+        this.audio_currentTime = global_audio.currentTime;
+        this.audio_duration = global_audio.duration;
+      }
       this.recent_stream_url = Store_Play.current_stream_url;
     },
     resumePlay: function(){
@@ -66,6 +83,10 @@ export default {
 #playbar_container{
   background-color: #303030;
   z-index: 200;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  left:0;
 }
 
 #playbar{

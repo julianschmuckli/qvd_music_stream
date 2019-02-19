@@ -12,7 +12,7 @@
         @mouseleave="mouseOver"
       >
       <div v-if="active" class="card_footer animated fadeIn">
-        <span style="">{{ title }}</span><br>
+        <span>{{ title }}</span><br>
         <i class="material-icons play" style="margin-right:20px;" @click="playTrack">play_arrow</i><i class="material-icons play" style="margin-left:20px;">cloud_download</i>
       </div>
       </v-card>
