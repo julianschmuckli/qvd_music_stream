@@ -54,6 +54,8 @@ export default {
     },
     playTrack: function(){
       Mutations_Play.startPlay(this.stream_url);
+      Mutations_Play.setTitle(this.title);
+      Mutations_Play.setCoverPath(this.cover_path);
     }
   }
 }
