@@ -13,7 +13,7 @@
       >
       <div v-if="active" class="card_footer animated fadeIn">
         <span>{{ title }}</span><br>
-        <i class="material-icons play" style="margin-right:20px;" @click="playTrack">play_arrow</i><i class="material-icons play" style="margin-left:20px;">cloud_download</i>
+        <i class="material-icons play" style="margin-right:20px;" v-ripple @click="playTrack">play_arrow</i><i class="material-icons play" v-ripple style="margin-left:20px;">cloud_download</i>
       </div>
       </v-card>
   </v-item>
@@ -30,6 +30,7 @@ export default {
       type: String,
       default: "https://cdn.pixabay.com/photo/2015/07/19/11/05/panels-851426_960_720.jpg"
     },
+    artist: String,
     stream_url: String
   },
   data: function(){
@@ -56,6 +57,7 @@ export default {
       Mutations_Play.startPlay(this.stream_url);
       Mutations_Play.setTitle(this.title);
       Mutations_Play.setCoverPath(this.cover_path);
+      Mutations_Play.setArtist(this.artist);
     }
   }
 }

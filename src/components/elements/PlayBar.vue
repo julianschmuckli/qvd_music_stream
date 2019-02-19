@@ -1,11 +1,9 @@
 <template>
   <div id="playbar_container">
+    <vue-headful :title="title + ' - ' + artist"/> <!-- For title -->
     <v-snackbar
       v-model="snackbar"
-      :color="color"
-      :multi-line="mode === 'multi-line'"
-      :timeout="timeout"
-      :vertical="mode === 'vertical'"
+      :timeout="3000"
     >
       {{ snackbar_text }}
       <v-btn
@@ -25,10 +23,10 @@
         </v-flex>
         <v-flex xs4>
           <div id="control_box">
-            <i class="material-icons controls" v-ripple @click="replayTrack" v-if="isPlaying">replay_10</i>
-            <i class="material-icons controls" v-ripple @click="pauseTrack" v-if="isPlaying">pause</i>
-            <i class="material-icons controls" v-ripple @click="resumePlay" v-if="!isPlaying">play_arrow</i>
-            <i class="material-icons controls" v-ripple @click="forwardTrack" v-if="isPlaying">forward_30</i>
+            <i class="material-icons controls" v-ripple @click="replayTrack" v-show="isPlaying">replay_10</i>
+            <i class="material-icons controls" v-ripple @click="pauseTrack" v-show="isPlaying">pause</i>
+            <i class="material-icons controls" v-ripple @click="resumePlay" v-show="!isPlaying">play_arrow</i>
+            <i class="material-icons controls" v-ripple @click="forwardTrack" v-show="isPlaying">forward_30</i>
           </div>
         </v-flex>
         <v-flex xs4 style="color:white;">
@@ -78,6 +76,9 @@ export default {
     title: function(){
       return Store_Play.title;
     },
+    artist: function(){
+      return Store_Play.artist;
+    },
     isLoading: function(){
       return this.isPlaying && this.audio == undefined;
     },
@@ -94,10 +95,38 @@ export default {
       this.audio.volume = val/100;
     }
   },
+  created: function(){
+    var global_this = this;
+    window.addEventListener('keydown', (e) => {
+      switch (e.keyCode) {
+        case 32:
+          if(global_this.isPlaying){
+            global_this.pauseTrack();
+          }else{
+            global_this.resumePlay();
+          }
+          break;
+        case 39:
+          if(global_this.isPlaying){
+            global_this.forwardTrack();
+          }
+          break;
+        case 37:
+          if(global_this.isPlaying){
+            global_this.replayTrack();
+          }
+          break;
+      }
+    });
+  },
   methods: {
     playTrack: function(){
       try{
         if(this.recent_stream_url != Store_Play.current_stream_url){
+          try{
+            this.audio.currentTime = 0;
+            this.audio.pause();
+          }catch(e){ console.log(e)}
           this.audio = new Audio(Store_Play.current_stream_url);
         }
         this.audio.volume = this.volume/100;
@@ -108,6 +137,15 @@ export default {
           outer_this.audio_currentTime = outer_this.audio.currentTime;
           outer_this.audio_duration = outer_this.audio.duration;
         });
+
+        //For system pause and play
+        this.audio.onplay = function(){
+          outer_this.resumePlay();
+        }
+        this.audio.onpause = function(){
+          outer_this.pauseTrack();
+        }
+
         this.recent_stream_url = Store_Play.current_stream_url;
       } catch(e){
         this.snackbar_text = "You haven't selected a track.";
@@ -142,7 +180,8 @@ export default {
   z-index: 200;
   position:fixed;
   bottom:0;
-  width:100%;
+  margin-left: 80px;
+  width:calc(100% - 80px);
   left:0;
   user-select: none;
   -webkit-user-select: none;
@@ -164,6 +203,6 @@ export default {
 
 .controls{
   cursor: pointer;
-  font-size: 40px;
+  font-size: 35px;
 }
 </style>

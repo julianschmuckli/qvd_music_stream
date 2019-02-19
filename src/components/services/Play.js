@@ -4,6 +4,7 @@ export const Store_Play = Vue.observable({
   current_stream_url: undefined,
   title: "",
   cover_path: "",
+  artist: "",
   isPlaying: false
 });
 
@@ -23,5 +24,8 @@ export const Mutations_Play = {
   },
   setCoverPath: function(cover_path){
     Store_Play.cover_path = cover_path;
+  },
+  setArtist: function(artist){
+    Store_Play.artist = artist;
   }
 }
