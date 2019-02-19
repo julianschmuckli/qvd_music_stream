@@ -30,4 +30,11 @@ export default {
 *:not(.material-icons){
   font-family: "Staatliches", sans-serif !important;
 }
+*{
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+}
 </style>

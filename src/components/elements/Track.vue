@@ -79,6 +79,11 @@ export default {
   text-overflow: ellipsis;
   padding-left: 5px;
   padding-right: 5px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  -o-user-select: none;
+  -moz-user-select: none;
 }
 
 .card_footer > i{
