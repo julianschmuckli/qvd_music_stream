@@ -13,13 +13,15 @@
       >
       <div v-if="active" class="card_footer animated fadeIn">
         <span style="">{{ title }}</span><br>
-        <i class="material-icons" style="margin-right:20px;">play_arrow</i><i class="material-icons" style="margin-left:20px;">cloud_download</i>
+        <i class="material-icons play" style="margin-right:20px;" @click="playTrack">play_arrow</i><i class="material-icons play" style="margin-left:20px;">cloud_download</i>
       </div>
       </v-card>
   </v-item>
 </template>
 
 <script>
+import {Mutations_Play} from "../services/Play.js";
+
 export default {
   name: 'Track',
   props:{
@@ -27,7 +29,8 @@ export default {
     cover: {
       type: String,
       default: "https://cdn.pixabay.com/photo/2015/07/19/11/05/panels-851426_960_720.jpg"
-    }
+    },
+    stream_url: String
   },
   data: function(){
     return {
@@ -48,6 +51,9 @@ export default {
       }else{
         this.card_height = 200;
       }
+    },
+    playTrack: function(){
+      Mutations_Play.startPlay(this.stream_url);
     }
   }
 }
@@ -74,6 +80,10 @@ export default {
 }
 
 .card_footer > i{
+  cursor: pointer;
+}
+
+.play{
   cursor: pointer;
 }
 </style>
