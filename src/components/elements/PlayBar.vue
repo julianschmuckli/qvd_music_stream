@@ -43,7 +43,7 @@ export default {
     },
     audioLength: function(){
       try{
-        console.log((this.audio_currentTime));
+        console.log("Test");
         return (this.audio_currentTime / this.audio_duration) * 100;
       }catch(e){
         return 0;
@@ -57,11 +57,11 @@ export default {
       }
       this.audio.play();
 
-      var global_audio = this.audio;
-      this.audio.ontimeupdate = function(){
-        this.audio_currentTime = global_audio.currentTime;
-        this.audio_duration = global_audio.duration;
-      }
+      var outer_this = this;
+      this.audio.addEventListener("timeupdate", function(){
+        outer_this.audio_currentTime = outer_this.audio.currentTime;
+        outer_this.audio_duration = outer_this.audio.duration;
+      });
       this.recent_stream_url = Store_Play.current_stream_url;
     },
     resumePlay: function(){
