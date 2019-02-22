@@ -14,24 +14,32 @@
         Close
       </v-btn>
     </v-snackbar>
-    <v-card width="100%"  id="playbar" height="100" class="animated slideInUp">
+    <v-card width="100%"  id="playbar" :height="card_height" class="animated slideInUp">
       <v-progress-linear :indeterminate="true" background-color="black lighten-3" color="white lighten-1" v-if="isLoading"></v-progress-linear>
       <v-progress-linear :indeterminate="false" background-color="black lighten-3" color="white lighten-1" v-if="!isLoading" :value="audioLength"></v-progress-linear>
-      <v-layout row wrap>
+      <v-layout style="height:100px;" row wrap>
         <v-flex xs4>
           <p style="padding-top:20px;">{{ title }}</p>
         </v-flex>
         <v-flex xs4>
-          <div id="control_box">
-            <i class="material-icons controls" v-ripple @click="replayTrack" v-show="isPlaying">replay_10</i>
-            <i class="material-icons controls" v-ripple @click="pauseTrack" v-show="isPlaying">pause</i>
-            <i class="material-icons controls" v-ripple @click="resumePlay" v-show="!isPlaying">play_arrow</i>
-            <i class="material-icons controls" v-ripple @click="forwardTrack" v-show="isPlaying">forward_30</i>
+          <div class="control_box">
+            <i class="material-icons controls" title="Go back for 10 seconds" v-ripple @click="replayTrack" v-show="isPlaying">replay_10</i>
+            <i class="material-icons controls" title="Pause the track" v-ripple @click="pauseTrack" v-show="isPlaying">pause</i>
+            <i class="material-icons controls" title="Resume the track" v-ripple @click="resumePlay" v-show="!isPlaying">play_arrow</i>
+            <i class="material-icons controls" title="Pass the track by 30 seconds" v-ripple @click="forwardTrack" v-show="isPlaying">forward_30</i>
           </div>
         </v-flex>
         <v-flex xs4 style="color:white;">
+          <div class="control_box">
+            <i class="material-icons controls" title="Open for more settings" v-ripple @click="openSettings">{{ settingsOpenIcon }}</i>
+          </div>
+        </v-flex>
+      </v-layout>
+      <v-layout style="height:100px;" row wrap>
+        <v-flex xs4 style="color:white;">
           <v-slider
               v-model="volume"
+              title="Control the volume"
               append-icon="volume_up"
               prepend-icon="volume_down"
               color="#FFF"
@@ -41,6 +49,11 @@
               min="0"
               max="100"
             ></v-slider>
+        </v-flex>
+        <v-flex xs4 style="color:white;">
+          <div class="control_box">
+            <i class="material-icons controls" title="Repeat this track" v-ripple @click="loopTrack" :style="isLooping ? 'color:#fff;' : 'color:#6b6b6b;'">repeat</i>
+          </div>
         </v-flex>
       </v-layout>
     </v-card>
@@ -59,8 +72,11 @@ export default {
       audio_duration: 0,
       recent_stream_url: undefined,
       volume: 50,
+      card_height: 100,
+      settingsOpenIcon: "keyboard_arrow_down",
       snackbar: false,
-      snackbar_text: ""
+      snackbar_text: "",
+      isLooping: false
     }
   },
   computed: {
@@ -161,6 +177,14 @@ export default {
         this.snackbar = true;
       }
     },
+    loopTrack: function(){
+      if(this.audio.loop){
+        this.audio.loop = false;
+      }else{
+        this.audio.loop = true;
+      }
+      this.isLooping = this.audio.loop;
+    },
     resumePlay: function(){
       Mutations_Play.resumePlay();
     },
@@ -178,6 +202,15 @@ export default {
     stopTrack: function(){
       this.audio.stop();
       this.audio = undefined;
+    },
+    openSettings: function(){
+      if(this.card_height == 100){
+        this.card_height = 200
+        this.settingsOpenIcon = "keyboard_arrow_up";
+      } else {
+        this.card_height = 100
+        this.settingsOpenIcon = "keyboard_arrow_down";
+      }
     }
   }
 }
@@ -200,7 +233,7 @@ export default {
   -moz-user-select: none;
 }
 
-#control_box{
+.control_box{
   margin-top:10px;
 }
 
