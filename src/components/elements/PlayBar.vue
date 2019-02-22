@@ -189,8 +189,8 @@ export default {
   z-index: 200;
   position:fixed;
   bottom:0;
-  margin-left: 80px;
-  width:calc(100% - 80px);
+  /*margin-left: 80px;*/
+  width: 100%;
   left:0;
   user-select: none;
   -webkit-user-select: none;

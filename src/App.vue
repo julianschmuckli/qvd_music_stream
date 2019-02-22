@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Navigation />
-    <v-content style="margin-left:80px;">
+    <!--<Navigation />-->
+    <v-content>
       <New />
     </v-content>
     <PlayBar />
@@ -10,14 +10,12 @@
 
 <script>
 import New from './components/pages/New';
-import Navigation from './components/main/Navigation';
 import PlayBar from './components/elements/PlayBar';
 
 export default {
   name: 'App',
   components: {
     New,
-    Navigation,
     PlayBar
   },
 }

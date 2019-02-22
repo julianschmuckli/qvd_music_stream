@@ -13,7 +13,8 @@
       >
       <div v-if="active" class="card_footer animated fadeIn">
         <span>{{ title }}</span><br>
-        <i class="material-icons play" style="margin-right:20px;" v-ripple @click="playTrack">play_arrow</i><i class="material-icons play" v-ripple style="margin-left:20px;">cloud_download</i>
+        <i class="material-icons play" style="margin-right:20px;" v-ripple @click="playTrack">play_arrow</i>
+        <i class="material-icons play" v-ripple style="margin-left:20px;" @click="downloadTrack">cloud_download</i>
       </div>
       </v-card>
   </v-item>
@@ -58,6 +59,9 @@ export default {
       Mutations_Play.setTitle(this.title);
       Mutations_Play.setCoverPath(this.cover_path);
       Mutations_Play.setArtist(this.artist);
+    },
+    downloadTrack: function() {
+      location.href = this.stream_url;
     }
   }
 }
