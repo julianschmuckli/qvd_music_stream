@@ -59,10 +59,31 @@
     };
     initializeCastApi = function() {
       cast.framework.CastContext.getInstance().setOptions({
-        receiverApplicationId: "92BDD3F6",
+        receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
         autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
       });
+
+      var cast_last_current_stream_url = undefined;
+      setInterval(function(){
+        console.log("Current: "+ window.cast_current_stream_url)
+        if(window.cast_current_stream_url != undefined && window.cast_current_stream_url != cast_last_current_stream_url){
+          try{
+            startCastSession();
+          }catch(e){}
+        }
+        cast_last_current_stream_url = window.cast_current_stream_url;
+      }, 1000); //Check for updates to submit
     };
+
+    function startCastSession(){
+      console.log("Start");
+      var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+      var mediaInfo = new chrome.cast.media.MediaInfo("https://stream.qvd-music.com/"+window.cast_current_stream_url, "audio/wav");
+      var request = new chrome.cast.media.LoadRequest(mediaInfo);
+      castSession.loadMedia(request).then(
+        function() { console.log('Load succeed'); },
+        function(errorCode) { console.log('Error code: ' + errorCode); });
+    }
     </script>
     <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script><!-- For Chromecast support -->
   </body>

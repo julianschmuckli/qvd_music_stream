@@ -53,6 +53,10 @@
         <v-flex xs4 style="color:white;">
           <div class="control_box">
             <i class="material-icons controls" title="Repeat this track" v-ripple @click="loopTrack" :style="isLooping ? 'color:#fff;' : 'color:#6b6b6b;'">repeat</i>
+          </div>
+        </v-flex>
+        <v-flex xs4 style="color:white;">
+          <div class="control_box" style="height:30px;">
             <google-cast-launcher v-pre></google-cast-launcher>
           </div>
         </v-flex>
@@ -117,6 +121,9 @@ export default {
   watch: {
     volume: function(val){
       this.audio.volume = val/100;
+    },
+    recent_stream_url: function(){
+      window.cast_current_stream_url = this.recent_stream_url;
     }
   },
   created: function(){
