@@ -53,6 +53,7 @@
         <v-flex xs4 style="color:white;">
           <div class="control_box">
             <i class="material-icons controls" title="Repeat this track" v-ripple @click="loopTrack" :style="isLooping ? 'color:#fff;' : 'color:#6b6b6b;'">repeat</i>
+            <google-cast-launcher v-pre></google-cast-launcher>
           </div>
         </v-flex>
       </v-layout>

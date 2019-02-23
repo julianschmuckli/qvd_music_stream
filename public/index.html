@@ -51,5 +51,19 @@
           console.log('service worker is not supported');
       }
     </script>
+    <script>
+    window['__onGCastApiAvailable'] = function(isAvailable) {
+      if (isAvailable) {
+        initializeCastApi();
+      }
+    };
+    initializeCastApi = function() {
+      cast.framework.CastContext.getInstance().setOptions({
+        receiverApplicationId: "92BDD3F6",
+        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+      });
+    };
+    </script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script><!-- For Chromecast support -->
   </body>
 </html>
