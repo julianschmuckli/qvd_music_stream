@@ -86,9 +86,6 @@ export default {
   },
   computed: {
     isPlaying: function(){
-      if(Store_Play.isPlaying){
-        this.playTrack();
-      }
       return Store_Play.isPlaying;
     },
     current_stream_url: function(){
@@ -124,6 +121,9 @@ export default {
     },
     recent_stream_url: function(){
       window.cast_current_stream_url = this.recent_stream_url;
+    },
+    current_stream_url: function(){
+      this.playTrack();
     }
   },
   created: function(){
@@ -161,25 +161,28 @@ export default {
             //Maybe first start
           }
           this.audio = new Audio(Store_Play.current_stream_url);
-        }
-        this.audio.volume = this.volume/100;
-        this.audio.play();
 
-        var outer_this = this;
-        this.audio.addEventListener("timeupdate", function(){
-          outer_this.audio_currentTime = outer_this.audio.currentTime;
-          outer_this.audio_duration = outer_this.audio.duration;
-        });
+          this.audio.volume = this.volume/100;
+          this.audio.play();
 
-        //For system pause and play
-        this.audio.onplay = function(){
-          outer_this.resumePlay();
-        }
-        this.audio.onpause = function(){
-          outer_this.pauseTrack();
-        }
+          var outer_this = this;
+          this.audio.addEventListener("timeupdate", function(){
+            outer_this.audio_currentTime = outer_this.audio.currentTime;
+            outer_this.audio_duration = outer_this.audio.duration;
+          });
 
-        this.recent_stream_url = Store_Play.current_stream_url;
+          //For system pause and play
+          this.audio.onplay = function(){
+            outer_this.resumePlay();
+          }
+          this.audio.onpause = function(){
+            outer_this.pauseTrack();
+          }
+
+          this.recent_stream_url = Store_Play.current_stream_url;
+        }else{
+          this.audio.play();
+        }
       } catch(e){
         this.snackbar_text = "You haven't selected a track.";
         this.snackbar = true;
@@ -194,6 +197,7 @@ export default {
       this.isLooping = this.audio.loop;
     },
     resumePlay: function(){
+      this.playTrack();
       Mutations_Play.resumePlay();
     },
     replayTrack: function(){
