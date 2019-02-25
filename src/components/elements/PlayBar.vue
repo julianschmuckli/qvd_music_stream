@@ -187,16 +187,16 @@ export default {
             outer_this.pauseTrack();
           }
 
+          //Load config from cookies
+          var looping = window.$cookies.get("playbar_isLooping") == undefined ? false : window.$cookies.get("playbar_isLooping");
+          if(looping == "true"){
+            this.loopTrack();
+          }
+
           this.recent_stream_url = Store_Play.current_stream_url;
         }
         this.audio.oncanplay = function(){
           outer_this.audio.play();
-
-          //Load config from cookies
-          var looping = window.$cookies.get("playbar_isLooping") == undefined ? false : window.$cookies.get("playbar_isLooping");
-          if(looping == "true"){
-            outer_this.loopTrack();
-          }
         }
         setTimeout(function(){
           if(isNaN(outer_this.audio.duration)){
@@ -219,7 +219,7 @@ export default {
       window.$cookies.set("playbar_isLooping", this.audio.loop);
     },
     resumePlay: function(){
-      this.playTrack();
+      this.audio.play();
       Mutations_Play.resumePlay();
     },
     replayTrack: function(){
