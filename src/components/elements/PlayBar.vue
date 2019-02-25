@@ -123,9 +123,17 @@ export default {
       window.cast_current_stream_url = this.recent_stream_url;
     },
     current_stream_url: function(){
+      try{
+        this.pauseTrack();
+      } catch (e){
+        //Nothing
+      }
       this.audio = undefined;
       this.playTrack();
     }
+  },
+  mounted: function(){
+
   },
   created: function(){
     var global_this = this;
@@ -183,6 +191,12 @@ export default {
         }
         this.audio.oncanplay = function(){
           outer_this.audio.play();
+
+          //Load config from cookies
+          var looping = window.$cookies.get("playbar_isLooping") == undefined ? false : window.$cookies.get("playbar_isLooping");
+          if(looping == "true"){
+            outer_this.loopTrack();
+          }
         }
         setTimeout(function(){
           if(isNaN(outer_this.audio.duration)){
@@ -202,6 +216,7 @@ export default {
         this.audio.loop = true;
       }
       this.isLooping = this.audio.loop;
+      window.$cookies.set("playbar_isLooping", this.audio.loop);
     },
     resumePlay: function(){
       this.playTrack();
