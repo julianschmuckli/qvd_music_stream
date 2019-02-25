@@ -2,6 +2,7 @@
   <v-app>
     <!--<Navigation />-->
     <v-content>
+      <SearchBar />
       <New />
     </v-content>
     <PlayBar />
@@ -11,12 +12,14 @@
 <script>
 import New from './components/pages/New';
 import PlayBar from './components/elements/PlayBar';
+import SearchBar from './components/elements/SearchBar';
 
 export default {
   name: 'App',
   components: {
     New,
-    PlayBar
+    PlayBar,
+    SearchBar
   },
 }
 </script>
