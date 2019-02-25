@@ -123,6 +123,7 @@ export default {
       window.cast_current_stream_url = this.recent_stream_url;
     },
     current_stream_url: function(){
+      this.audio = undefined;
       this.playTrack();
     }
   },
@@ -153,7 +154,8 @@ export default {
   methods: {
     playTrack: function(){
       try{
-        if(this.recent_stream_url != Store_Play.current_stream_url){
+        var outer_this = this;
+        if(this.audio == undefined){
           try{
             this.audio.currentTime = 0;
             this.audio.pause();
@@ -163,9 +165,7 @@ export default {
           this.audio = new Audio(Store_Play.current_stream_url);
 
           this.audio.volume = this.volume/100;
-          this.audio.play();
 
-          var outer_this = this;
           this.audio.addEventListener("timeupdate", function(){
             outer_this.audio_currentTime = outer_this.audio.currentTime;
             outer_this.audio_duration = outer_this.audio.duration;
@@ -180,9 +180,16 @@ export default {
           }
 
           this.recent_stream_url = Store_Play.current_stream_url;
-        }else{
-          this.audio.play();
         }
+        this.audio.oncanplay = function(){
+          outer_this.audio.play();
+        }
+        setTimeout(function(){
+          if(isNaN(outer_this.audio.duration)){
+            outer_this.snackbar_text = "The track does not exist. Sorry for that.";
+            outer_this.snackbar = true;
+          }
+        }, 3000);
       } catch(e){
         this.snackbar_text = "You haven't selected a track.";
         this.snackbar = true;
@@ -202,7 +209,6 @@ export default {
     },
     replayTrack: function(){
       this.audio.currentTime -= 10;
-      this.audio.play();
     },
     forwardTrack: function(){
       this.audio.currentTime += 30;
@@ -210,10 +216,6 @@ export default {
     pauseTrack: function(){
       Mutations_Play.stopPlay();
       this.audio.pause();
-    },
-    stopTrack: function(){
-      this.audio.stop();
-      this.audio = undefined;
     },
     openSettings: function(){
       if(this.card_height == 100){
