@@ -19,7 +19,7 @@
       <v-progress-linear :indeterminate="false" background-color="black lighten-3" color="white lighten-1" v-if="!isLoading" :value="audioLength"></v-progress-linear>
       <v-layout style="height:100px;" row wrap>
         <v-flex xs4>
-          <p style="padding-top:20px;">{{ title }}</p>
+          <p style="padding-top:12px;">{{ title }}<br><span style='color:#b2b2b2;'>{{ artist }}</span></p>
         </v-flex>
         <v-flex xs4>
           <div class="control_box">
