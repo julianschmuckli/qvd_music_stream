@@ -1,14 +1,18 @@
 <template>
-  <div role="listitem">
-    <v-list-tile-action class="tile">
-      <v-icon @click="playTrack">play_arrow</v-icon>
+  <v-layout wrap>
+    <v-list-tile-action xs4 class="tile">
+      <v-icon @click="playTrack">play_arrow</v-icon><br>
     </v-list-tile-action>
 
-    <v-list-tile-content class="tile">
+    <v-list-tile-content xs4 class="tile">
       <v-list-tile-title v-text="this.title"></v-list-tile-title>
       <v-list-tile-sub-title v-text="this.artist"></v-list-tile-sub-title>
     </v-list-tile-content>
-  </div>
+
+    <v-list-tile-action xs4 class="tile" style="text-align:right;padding-top:8px;padding-bottom:8px;">
+      <v-icon @click="downloadTrack">cloud_download</v-icon>
+    </v-list-tile-action>
+  </v-layout>
 </template>
 
 <script>

@@ -10,8 +10,12 @@
     ></v-text-field>
     <div v-if="search_term != ''">
       <v-list>
+        <v-list-tile dark v-if="search_tracks == undefined || search_tracks.length == 0">
+          <v-list-tile-content class="tile" style="text-align:center;padding-top:11px;">
+            No results
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile
-          avatar
           dark
           v-for="track in search_tracks"
           :key="track.id"
@@ -31,7 +35,7 @@ export default{
   data: function(){
     return {
       search_term: "",
-      search_tracks: undefined,
+      search_tracks: [],
       isLoading: false
     }
   },
