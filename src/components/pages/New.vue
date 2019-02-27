@@ -45,5 +45,7 @@ export default {
 </script>
 
 <style>
-
+#new_releases{
+  margin-bottom: 200px;
+}
 </style>

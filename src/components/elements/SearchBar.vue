@@ -8,29 +8,29 @@
       :loading="isLoading"
       elevation="15"
     ></v-text-field>
-    <v-layout wrap v-if="search_term != ''">
-      <v-flex
-        v-for="track in search_tracks"
-        :key="track.id"
-        xs12
-        sm6
-        md4
-        lg3
-      >
-        <Track :title="track.track_name" :cover="track.cover_path" :stream_url="track.track_path" :artist="track.artist" class="animated fadeIn" />
-      </v-flex>
-    </v-layout>
+    <div v-if="search_term != ''">
+      <v-list>
+        <v-list-tile
+          avatar
+          dark
+          v-for="track in search_tracks"
+          :key="track.id"
+        >
+          <TrackList :title="track.track_name" :cover="track.cover_path" :stream_url="track.track_path" :artist="track.artist" />
+        </v-list-tile>
+      </v-list>
+    </div>
   </v-container>
 </template>
 
 <script>
-import Track from '../elements/Track';
+import TrackList from '../elements/TrackList';
 
 export default{
   name: "SearchBar",
   data: function(){
     return {
-      search_term: undefined,
+      search_term: "",
       search_tracks: undefined,
       isLoading: false
     }
@@ -46,7 +46,7 @@ export default{
     }
   },
   components: {
-    Track
+    TrackList
   }
 }
 </script>
