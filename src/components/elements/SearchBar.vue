@@ -7,6 +7,7 @@
       v-model="search_term"
       :loading="isLoading"
       elevation="15"
+      class="selectable"
     ></v-text-field>
     <div v-if="search_term != ''">
       <v-list>
