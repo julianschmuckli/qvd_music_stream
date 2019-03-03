@@ -31,7 +31,7 @@ export default {
 *:not(.material-icons){
   font-family: "Staatliches", sans-serif !important;
 }
-*:not(.selectable input){
+*:not(input){
   -webkit-user-select: none;
   -ms-user-select: none;
   -webkit-touch-callout: none;

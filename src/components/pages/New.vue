@@ -24,6 +24,7 @@
 
 <script>
 import Track from '../elements/Track';
+import { Endpoints } from "../../Endpoints";
 
 export default {
   name: 'New',
@@ -36,7 +37,7 @@ export default {
     }
   },
   mounted: function(){
-    let api_new_tracks = "https://qvd-music.com/backend/stream/tracks/new.php";
+    let api_new_tracks = Endpoints.new_tracks;
     this.axios.get(api_new_tracks).then((response) => {
       this.new_tracks = response.data.tracks;
     });

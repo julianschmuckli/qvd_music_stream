@@ -30,6 +30,7 @@
 
 <script>
 import TrackList from '../elements/TrackList';
+import {Endpoints} from '../../Endpoints.js';
 
 export default{
   name: "SearchBar",
@@ -42,7 +43,7 @@ export default{
   },
   watch: {
     search_term: function(){
-      let api_search_tracks = "https://qvd-music.com/backend/stream/tracks/search.php?q=" + this.search_term;
+      let api_search_tracks = Endpoints.search_tracks + this.search_term;
       this.isLoading = "#ffffff";
       this.axios.get(api_search_tracks).then((response) => {
         this.search_tracks = response.data.tracks;
