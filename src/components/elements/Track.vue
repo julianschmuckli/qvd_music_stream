@@ -32,6 +32,7 @@ export default {
       default: "https://cdn.pixabay.com/photo/2015/07/19/11/05/panels-851426_960_720.jpg"
     },
     artist: String,
+    release_date: String,
     stream_url: String
   },
   data: function(){
@@ -55,10 +56,11 @@ export default {
       }
     },
     playTrack: function(){
-      Mutations_Play.startPlay(this.stream_url);
       Mutations_Play.setTitle(this.title);
-      Mutations_Play.setCoverPath(this.cover_path);
+      Mutations_Play.setCoverPath(this.cover);
       Mutations_Play.setArtist(this.artist);
+      Mutations_Play.setReleaseDate(this.release_date);
+      Mutations_Play.startPlay(this.stream_url);
     },
     downloadTrack: function() {
       location.href = this.stream_url;

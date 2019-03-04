@@ -24,8 +24,8 @@
         <v-flex xs4>
           <div class="control_box">
             <i class="material-icons controls" title="Go back for 10 seconds" v-ripple @click="replayTrack" v-show="isPlaying">replay_10</i>
-            <i class="material-icons controls" title="Pause the track" v-ripple @click="pauseTrack" v-show="isPlaying">pause</i>
-            <i class="material-icons controls" title="Resume the track" v-ripple @click="resumePlay" v-show="!isPlaying">play_arrow</i>
+            <i class="material-icons controls" title="Pause the track" id="pause_track" v-ripple @click="pauseTrack" v-show="isPlaying">pause</i>
+            <i class="material-icons controls" title="Resume the track" id="play_track" v-ripple @click="resumePlay" v-show="!isPlaying">play_arrow</i>
             <i class="material-icons controls" title="Pass the track by 30 seconds" v-ripple @click="forwardTrack" v-show="isPlaying">forward_30</i>
           </div>
         </v-flex>
@@ -97,6 +97,12 @@ export default {
     artist: function(){
       return Store_Play.artist;
     },
+    cover_path: function(){
+      return Store_Play.cover_path;
+    },
+    release_date: function(){
+      return Store_Play.release_date;
+    },
     isLoading: function(){
       return this.isPlaying && this.audio == undefined;
     },
@@ -120,7 +126,12 @@ export default {
       this.audio.volume = val/100;
     },
     recent_stream_url: function(){
+      //For Google Cast integration
       window.cast_current_stream_url = this.recent_stream_url;
+      window.cast_current_title = this.title;
+      window.cast_current_artist = this.artist;
+      window.cast_current_release_date = this.release_date;
+      window.cast_current_cover_path = this.cover_path;
     },
     current_stream_url: function(){
       try{

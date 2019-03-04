@@ -5,6 +5,7 @@ export const Store_Play = Vue.observable({
   title: "",
   cover_path: "",
   artist: "",
+  release_date: "",
   isPlaying: false
 });
 
@@ -27,5 +28,8 @@ export const Mutations_Play = {
   },
   setArtist: function(artist){
     Store_Play.artist = artist;
+  },
+  setReleaseDate: function(release_date){
+    Store_Play.release_date = release_date;
   }
 }

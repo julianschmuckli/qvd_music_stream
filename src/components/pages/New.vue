@@ -14,7 +14,7 @@
             md4
             lg3
           >
-            <Track :title="track.track_name" :cover="track.cover_path" :stream_url="track.track_path" :artist="track.artist" class="animated flipInY" />
+            <Track :title="track.track_name" :cover="track.cover_path" :stream_url="track.track_path" :artist="track.artist" :release_date="track.release_date" class="animated flipInY" />
           </v-flex>
         </v-layout>
       </v-container>
