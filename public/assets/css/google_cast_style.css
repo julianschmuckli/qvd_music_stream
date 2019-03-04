@@ -1,0 +1,23 @@
+/*
+Find the documentation here: https://developers.google.com/cast/docs/styled_receiver
+*/
+.background {
+  background: #303030;
+}
+
+.logo {
+  background-image: url(/assets/img/apple-icon-180x180.png);
+}
+
+.progressBar {
+  background-color: #fff;
+}
+
+.splash {
+
+}
+
+.watermark {
+  background-image: url(/assets/img/apple-icon-180x180.png);
+  background-size: 57px 57px;
+}
