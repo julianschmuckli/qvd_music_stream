@@ -3,14 +3,25 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css?family=Staatliches" rel="stylesheet">
 
     <!-- Meta data -->
     <meta name="theme-color" content="#303030">
-    <title>Quinten van der Dam - Stream</title>
+    <style>
+    body{
+      background-color: #303030;
+    }
+    #offline{
+      font-family: Verdana, "sans-serif";
+      color: white;
+      text-align: center;
+      width: 100%;
+    }
+    </style>
+    <title>QVD Stream</title>
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/assets/img/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/apple-icon-72x72.png">
@@ -30,9 +41,14 @@
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but qvd_music_stream doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>We're sorry but QVD Stream doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
+    <div id="offline" style="display:none;">
+      <h1>QVD Stream</h1>
+      <img src="assets/img/noconnection.svg" width="150" height="150">
+      <p>You're offline. Please check your connection in order to use QVD Stream.</p>
+    </div>
     <!-- built files will be auto injected -->
     <script>
       if ('serviceWorker' in navigator) {
@@ -51,62 +67,7 @@
           console.log('service worker is not supported');
       }
     </script>
-    <script>
-    window['__onGCastApiAvailable'] = function(isAvailable) {
-      if (isAvailable) {
-        initializeCastApi();
-      }
-    };
-    initializeCastApi = function() {
-      cast.framework.CastContext.getInstance().setOptions({
-        receiverApplicationId: "9B008F41",
-        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
-      });
-
-      var cast_last_current_stream_url = undefined;
-      setInterval(function(){
-        if(window.cast_current_stream_url != undefined && window.cast_current_stream_url != cast_last_current_stream_url){
-          try{
-            startCastSession();
-          }catch(e){}
-        }
-        cast_last_current_stream_url = window.cast_current_stream_url;
-      }, 1000); //Check for updates to submit
-    };
-
-    function startCastSession(){
-      var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
-      var mediaInfo = new chrome.cast.media.MediaInfo("https://stream.qvd-music.com/"+window.cast_current_stream_url, "audio/wav");
-      mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata()
-      mediaInfo.metadata.title = window.cast_current_title;
-      mediaInfo.metadata.songName = window.cast_current_title;
-      mediaInfo.metadata.artist = window.cast_current_artist;
-      mediaInfo.metadata.artistName = window.cast_current_artist;
-      mediaInfo.metadata.albumArtist = window.cast_current_artist;
-      mediaInfo.metadata.subtitle = window.cast_current_artist;
-      mediaInfo.metadata.releaseDate = window.cast_current_release_date;
-
-      var image = new chrome.cast.Image(window.cast_current_cover_path);
-      mediaInfo.metadata.images = [image];
-      var request = new chrome.cast.media.LoadRequest(mediaInfo);
-      castSession.loadMedia(request).then(
-        function() {
-          //Load successful
-          eventFire(document.getElementById('pause_track'), 'click');
-        },
-        function(errorCode) { console.log('Error code: ' + errorCode); });
-    }
-
-    function eventFire(el, etype){
-      if (el.fireEvent) {
-        el.fireEvent('on' + etype);
-      } else {
-        var evObj = document.createEvent('Events');
-        evObj.initEvent(etype, true, false);
-        el.dispatchEvent(evObj);
-      }
-    }
-    </script>
+    <script src="assets/js/front_script.js"></script>
     <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script><!-- For Chromecast support -->
   </body>
 </html>
