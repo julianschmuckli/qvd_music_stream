@@ -17,7 +17,7 @@ npm install # Install the dependencies
 npm run serve # Preview the app locally
 npm run build # Make files ready for production
 ```
-After you have run the project, please make sure that you provide also your own **Backend** for your own tracks. By default it is using the backend of stream.qvd-music.com. Further details will come soon.
+After you have run the project, please make sure that you provide also your own **Backend** for your own tracks. By default it is using the backend of stream.qvd-music.com. You find some documentation for the [Backend APIs in the Wiki](https://github.com/julianschmuckli/qvd_music_stream/wiki/Backend-APIs) of this repository.
 
 ## License
 This project is licensed under the Apache-2.0 License. Please feel free to use this project for your own or use part of it, as long as you give credits to this repository.
