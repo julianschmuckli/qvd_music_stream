@@ -211,7 +211,7 @@ export default {
         }
         setTimeout(function(){
           if(isNaN(outer_this.audio.duration)){
-            outer_this.snackbar_text = "The track does not exist. Sorry for that.";
+            outer_this.snackbar_text = "The track is still loading. Please have some patience.";
             outer_this.snackbar = true;
           }
         }, 3000);
